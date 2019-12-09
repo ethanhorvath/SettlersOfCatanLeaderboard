@@ -1,4 +1,9 @@
-////////////////////FINISHED////////////////////////////
+/**
+ * Settlers Of Catan Leaderboard Sorting and Ranking Scripts
+ * @Author: Ethan Horvath
+ * @Date Started: November 6th, 2019
+ */
+
 function settlersOfCatan(playerAmount){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
@@ -176,12 +181,23 @@ function getIdealWR(playerCell){ //GETS IDEAL WINRATE THAT EACH PLAYER SHOULD GE
   
 }
 
+
+/**
+ * Returns number of unique players that have played Settlers of Catan at the House.
+ * @return The amount of unique players.
+ * @customfunction
+ */
+
 function getTotalPlayerCount(){
   return getListOfPlayers().length;
 }
 
-/////////////////////////////
-
+/**
+ * Gets the longest current win streak that any player(s) may achieve.
+ * @param {player} player name will be searched and counted to tally a correct current win streak.
+ * @return The current win streak length that {player} is on.
+ * @customfunction
+ */
 function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var losses = sheet.getRange('C3:G').getValues(); //LOSS ARRAY
@@ -312,11 +328,9 @@ function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR
     }
   }
   
- return currentStreak;
+ return currentStreak; //RETURN FOR CURRENT LONGEST LOSSSTREAK
 }
-  /////////////////////////////////////
-  //RETURN FOR CURRENT LONGEST LOSSSTREAK
-  //PRINTING OUT THE LONGEST CURRENT WIN STREAK//
+  //PRINTING OUT THE LONGEST CURRENT LOSS STREAK//
   result = "";
     if(highestCurrentLS > 1){
       for(var i = 0; i < LSArray.length; i++){
