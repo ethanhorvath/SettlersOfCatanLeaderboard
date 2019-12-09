@@ -4,6 +4,10 @@
  * @Date Started: November 6th, 2019
  */
 
+ /*****************************************************************
+ * IF YOU LIVE IN HOUSE AND CAN ACCESS THIS DO NOT TOUCH ANYTHING *
+ *****************************************************************/
+
 function settlersOfCatan(playerAmount){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
@@ -12,7 +16,7 @@ function settlersOfCatan(playerAmount){
   var players = getListOfPlayers();
   var stats = [];
   
-  for(var i = 0; i < players.length; i++){
+  for(var i = 0; i < players.length; i++){ //For Loop that prints out all the game stats and data.
    stats[i] = [players[i], getTotalWins(players[i]), getTotalGames(players[i]), getTotalWins(players[i]) / getTotalGames(players[i]), getIdealWR(players[i]), getLongestWinstreak(players[i]), getLongestLossstreak(players[i])];
   }
   
@@ -48,7 +52,7 @@ function getTotalWins(player){
       numOfWins++;
   }
   
-  if(player == "Ethan")
+  if(player == "Ethan") //Unforunately due to a penatly from Johnny Kret forfeiting a match, this is the lazy way to give me a win since Max technically has the win counted since there is no condition for a tie in Settlers of Catan.
     numOfWins++;
   
   return numOfWins;
@@ -205,7 +209,7 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
   var players = getListOfPlayers();
   
   var temp;
-  var playerIndex
+  var playerIndex //VERY IMPORTANT Variable to keep track of the original player index to ensure that the player is not repeated when checking for any other repeat achievers.
   var highestCurrentWS = 0;
   var result;
   var WSArray = []; //Win Streak Array
@@ -279,8 +283,12 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
 }
 
 
-//////////////////////////////////
-
+/**
+ * Gets the longest current loss streak that any player(s) may achieve.
+ * @param {player} player name will be searched and counted to tally a correct current loss streak.
+ * @return The current loss streak length that {player} is on.
+ * @customfunction
+ */
 function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var losses = sheet.getRange('C3:G').getValues(); //LOSS ARRAY
@@ -288,7 +296,7 @@ function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR
   var players = getListOfPlayers();
   
   var temp;
-  var playerIndex
+  var playerIndex //VERY IMPORTANT Variable to keep track of the original player index to ensure that the player is not repeated when checking for any other repeat achievers.
   var highestCurrentLS = 0;
   var result;
   var LSArray = []; //Loss Streak Array
