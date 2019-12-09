@@ -180,6 +180,8 @@ function getTotalPlayerCount(){
   return getListOfPlayers().length;
 }
 
+/////////////////////////////
+
 function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var losses = sheet.getRange('C3:G').getValues(); //LOSS ARRAY
@@ -190,11 +192,20 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
   var playerIndex
   var highestCurrentWS = 0;
   var result;
+  var WSArray = []; //Win Streak Array
+  //var WSPlayerIndexArray = []; // Win Streak Player Index used for formatting later //
   for(var i = 0; i < players.length; i++){
     temp = getCurrentWS(players[i]);
     if(temp > highestCurrentWS){
       highestCurrentWS = temp;
       playerIndex = i;
+    }
+  }
+  //Looping though again to see if anyone else ties for the same longest win streak//
+  WSArray.push(players[playerIndex]);
+  for(var i = 0; i < players.length; i++){
+    if(getCurrentWS(players[i]) == highestCurrentWS && players.length > 0 && players[i] != players[playerIndex]){ //Ensuring that the player is a different player from before
+      WSArray.push(players[i]);
     }
   }
   
@@ -228,18 +239,31 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
           return 0;                                                                                                                           
     }
   }
- return currentStreak;
-}
+    return currentStreak;
+  }
+
   /////////////////////////////////////
   //RETURN FOR CURRENT LONGEST WINSTREAK
-  if(highestCurrentWS > 1){
-    result = players[playerIndex] + ", "+highestCurrentWS+" Games";
+  
+  //PRINTING OUT THE LONGEST CURRENT WIN STREAK//
+  result = "";
+    if(highestCurrentWS > 1){
+      for(var i = 0; i < WSArray.length; i++){
+        result = result + WSArray[i] + ", ";
+      }
+     result = result + highestCurrentWS+" Games";
   }else{
-    result = players[playerIndex] + ", "+highestCurrentWS+" Game";
+    for(var i = 0; i < WSArray.length; i++){
+      result += players[playerIndex] + ", ";
+    }
+    result += highestCurrentWS+" Game";
   }
     
   return result;
 }
+
+
+//////////////////////////////////
 
 function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
@@ -251,11 +275,19 @@ function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR
   var playerIndex
   var highestCurrentLS = 0;
   var result;
+  var LSArray = []; //Loss Streak Array
   for(var i = 0; i < players.length; i++){
     temp = getCurrentLS(players[i]);
     if(temp > highestCurrentLS){
       highestCurrentLS = temp;
       playerIndex = i;
+    }
+  }
+  //Looping though again to see if anyone else ties for the same longest loss streak//
+  LSArray.push(players[playerIndex]);
+  for(var i = 0; i < players.length; i++){
+    if(getCurrentLS(players[i]) == highestCurrentLS && players.length > 0 && players[i] != players[playerIndex]){ //Ensuring that the player is a different player from before
+      LSArray.push(players[i]);
     }
   }
   
@@ -284,10 +316,18 @@ function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR
 }
   /////////////////////////////////////
   //RETURN FOR CURRENT LONGEST LOSSSTREAK
-  if(highestCurrentLS > 1){
-    result = players[playerIndex] + ", "+highestCurrentLS+" Games";
+  //PRINTING OUT THE LONGEST CURRENT WIN STREAK//
+  result = "";
+    if(highestCurrentLS > 1){
+      for(var i = 0; i < LSArray.length; i++){
+        result = result + LSArray[i] + ", ";
+      }
+     result = result + highestCurrentLS+" Games";
   }else{
-    result = players[playerIndex] + ", "+highestCurrentLS+" Game";
+    for(var i = 0; i < LSArray.length; i++){
+      result += players[playerIndex] + ", ";
+    }
+    result += highestCurrentLS+" Game";
   }
     
   return result;
