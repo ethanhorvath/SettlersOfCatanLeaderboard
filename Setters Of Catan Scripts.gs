@@ -7,13 +7,19 @@
  /*****************************************************************
  * IF YOU LIVE IN HOUSE AND CAN ACCESS THIS DO NOT TOUCH ANYTHING *
  *****************************************************************/
-
+/**
+ * settlersOfCatan()
+ * Main Method that runs main stat sheet. Theses value all represent certain stats displayed on the main spreadsheet.
+ * @param {playerAmount} This is used to auto update the script everytime a game is ran because Google Scripts will auto refresh scripts when a parameter has updated from a previous form.
+ * @return {stats} The main array that holds all of the data for all of the players that have played Settlers of Catan at The House.
+ * @customfunction
+ */
 function settlersOfCatan(playerAmount){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
   var nOG = sheet.getRange('I3'); //NUM OF GAMES
   var numOfGame = nOG.getValue();
-  var players = getListOfPlayers();
+  var players = getListOfPlayers(); //Array that holds all of the player's names
   var stats = [];
   
   for(var i = 0; i < players.length; i++){ //For Loop that prints out all the game stats and data.
@@ -23,9 +29,13 @@ function settlersOfCatan(playerAmount){
   return stats;
       
 }
-
-
-
+/**
+ * getTotalGames()
+ * Gets total number of games that the player has played in
+ * @param {player} Which user to count games for
+ * @return {numOfGamesPlayed} Amount of games that player participated in.
+ * @customfunction
+ */
 function getTotalGames(player){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
@@ -40,7 +50,13 @@ function getTotalGames(player){
   }
   return numOfGamesPlayed;
 }
-   
+/**
+ * getTotalWins()
+ * Gets total number of wins that the player has achieved
+ * @param {player} Which user to count wins for
+ * @return {numOfWin} Amount of games that player won.
+ * @customfunction
+ */
 function getTotalWins(player){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var wins = sheet.getRange('B2:B').getValues(); //WINS COLUMN
@@ -57,7 +73,12 @@ function getTotalWins(player){
   
   return numOfWins;
 }     
-   
+/**
+ * getListOfPlayers()
+ * Function that gets lists of players, only adds a player to the list if they haven't played before.
+ * @return {players} Array that holds all of the names of the players that have played.
+ * @customfunction
+ */
 function getListOfPlayers(){
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
@@ -81,7 +102,13 @@ function getListOfPlayers(){
   }
   return players;
 }
-
+/**
+ * getLongestLossstreak()
+ * Gets longest lossstreak stat for a player.
+ * @param {playerCell} Player to count longest lossstreak for.
+ * @return {longestStreak} Longest lossstreak.
+ * @customfunction
+ */
 function getLongestLossstreak(playerCell){ //GETS LONGEST LOSSSTREAK FOR ACTIVE PLAYER
   //INITIALIZING VARIABLES
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
@@ -108,7 +135,13 @@ function getLongestLossstreak(playerCell){ //GETS LONGEST LOSSSTREAK FOR ACTIVE 
   
  return longestStreak;
 }
-
+/**
+ * getLongestWinstreak()
+ * Gets longest winstreak stat for a player.
+ * @param {playerCell} Player to count longest winstreak for.
+ * @return {longestStreak} Longest winstreak.
+ * @customfunction
+ */
 function getLongestWinstreak(playerCell){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
   //INITIALIZING VARIABLES
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
@@ -143,7 +176,16 @@ function getLongestWinstreak(playerCell){ //GETS LONGEST WINSTREAK FOR ACTIVE PL
   }
  return longestStreak;
 }
-
+/**
+ * getIdealWR()
+ * Gets the ideal win rate for a player. This takes into account if a player played in a 
+ * game with 4 players, each player of all equal skill should have a 25% win rate.
+ * 1 / Number of Players = WR. Add this up for every game a player has been in,
+ * and then take an average.
+ * @param {playerCell} Player to get ideal win rate for.
+ * @return Ideal Win Rate.
+ * @customfunction
+ */
 function getIdealWR(playerCell){ //GETS IDEAL WINRATE THAT EACH PLAYER SHOULD GET IN A PERFECT WORLD
   var sheet = SpreadsheetApp.getActive().getActiveSheet();
   var games = sheet.getRange('B2:G').getValues(); //GAMES ARRAY [][]
@@ -187,19 +229,22 @@ function getIdealWR(playerCell){ //GETS IDEAL WINRATE THAT EACH PLAYER SHOULD GE
 
 
 /**
+ * getTotalPlayerCount()
  * Returns number of unique players that have played Settlers of Catan at the House.
+ * @param {playerAmount} This is used to auto update the script everytime a game is ran because Google Scripts will auto refresh scripts when a parameter has updated from a previous form.
  * @return The amount of unique players.
  * @customfunction
  */
 
-function getTotalPlayerCount(){
+function getTotalPlayerCount(playerAmount){
   return getListOfPlayers().length;
 }
 
 /**
- * Gets the longest current win streak that any player(s) may achieve.
- * @param {player} player name will be searched and counted to tally a correct current win streak.
- * @return The current win streak length that {player} is on.
+ * getLongestCurrentWinstreak()
+ * Gets the longest current winstreak that any player(s) may achieve.
+ * @param {playerAmount} All player names will be searched and counted to tally a correct current winstreak. Only the highest champions will be shown with their score
+ * @return {result} The current winstreak string with player(s) and game amount.
  * @customfunction
  */
 function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
@@ -284,9 +329,10 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
 
 
 /**
- * Gets the longest current loss streak that any player(s) may achieve.
- * @param {player} player name will be searched and counted to tally a correct current loss streak.
- * @return The current loss streak length that {player} is on.
+ * getLongestCurrentLossstreak()
+ * Gets the longest current lossstreak that any player(s) may achieve.
+ * @param {playerAmount} All player names will be searched and counted to tally a correct current lossstreak. Only the highest champions will be shown with their score
+ * @return {result} The current lossstreak string with player(s) and game amount.
  * @customfunction
  */
 function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR ACTIVE PLAYER
