@@ -269,7 +269,7 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
   //Looping though again to see if anyone else ties for the same longest win streak//
   WSArray.push(players[playerIndex]);
   for(var i = 0; i < players.length; i++){
-    if(getCurrentWS(players[i]) == highestCurrentWS && players.length > 0 && players[i] != players[playerIndex]){ //Ensuring that the player is a different player from before
+    if(getCurrentWS(players[i]) == highestCurrentWS && players[i] != players[playerIndex]){ //Ensuring that the player is a different player from before
       WSArray.push(players[i]);
     }
   }
@@ -319,7 +319,7 @@ function getLongestCurrentWinstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR 
      result = result + highestCurrentWS+" Games";
   }else{
     for(var i = 0; i < WSArray.length; i++){
-      result += players[playerIndex] + ", ";
+      result += WSArray[i] + ", ";
     }
     result += highestCurrentWS+" Game";
   }
@@ -393,7 +393,7 @@ function getLongestCurrentLossstreak(playerAmount){ //GETS LONGEST WINSTREAK FOR
      result = result + highestCurrentLS+" Games";
   }else{
     for(var i = 0; i < LSArray.length; i++){
-      result += players[playerIndex] + ", ";
+      result += LSArray[i] + ", ";
     }
     result += highestCurrentLS+" Game";
   }
